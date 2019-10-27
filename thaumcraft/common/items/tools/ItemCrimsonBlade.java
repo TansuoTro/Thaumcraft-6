@@ -1,0 +1,118 @@
+/*     */ package thaumcraft.common.items.tools;
+/*     */ 
+/*     */ import java.util.List;
+/*     */ import net.minecraft.client.renderer.ItemMeshDefinition;
+/*     */ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+/*     */ import net.minecraft.client.util.ITooltipFlag;
+/*     */ import net.minecraft.entity.Entity;
+/*     */ import net.minecraft.entity.EntityLivingBase;
+/*     */ import net.minecraft.entity.player.EntityPlayer;
+/*     */ import net.minecraft.init.MobEffects;
+/*     */ import net.minecraft.item.EnumRarity;
+/*     */ import net.minecraft.item.Item;
+/*     */ import net.minecraft.item.ItemStack;
+/*     */ import net.minecraft.item.ItemSword;
+/*     */ import net.minecraft.potion.PotionEffect;
+/*     */ import net.minecraft.util.text.TextFormatting;
+/*     */ import net.minecraft.util.text.translation.I18n;
+/*     */ import net.minecraft.world.World;
+/*     */ import net.minecraftforge.common.util.EnumHelper;
+/*     */ import net.minecraftforge.fml.common.FMLCommonHandler;
+/*     */ import net.minecraftforge.fml.relauncher.Side;
+/*     */ import net.minecraftforge.fml.relauncher.SideOnly;
+/*     */ import thaumcraft.api.items.IWarpingGear;
+/*     */ import thaumcraft.api.items.ItemsTC;
+/*     */ import thaumcraft.common.config.ConfigItems;
+/*     */ import thaumcraft.common.items.IThaumcraftItems;
+/*     */ 
+/*     */ 
+/*     */ public class ItemCrimsonBlade
+/*     */   extends ItemSword
+/*     */   implements IWarpingGear, IThaumcraftItems
+/*     */ {
+/*  33 */   public static Item.ToolMaterial toolMatCrimsonVoid = EnumHelper.addToolMaterial("CVOID", 4, 200, 8.0F, 3.5F, 20).setRepairItem(new ItemStack(ItemsTC.ingots, 1, 1));
+/*     */   
+/*     */   public ItemCrimsonBlade() {
+/*  36 */     super(toolMatCrimsonVoid);
+/*  37 */     func_77637_a(ConfigItems.TABTC);
+/*  38 */     setRegistryName("crimson_blade");
+/*  39 */     func_77655_b("crimson_blade");
+/*  40 */     ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
+/*     */   }
+/*     */ 
+/*     */ 
+/*     */   
+/*  45 */   public Item getItem() { return this; }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */   
+/*  50 */   public String[] getVariantNames() { return new String[] { "normal" }; }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */   
+/*  55 */   public int[] getVariantMeta() { return new int[] { 0 }; }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */   
+/*  60 */   public ItemMeshDefinition getCustomMesh() { return null; }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */   
+/*  65 */   public ModelResourceLocation getCustomModelResourceLocation(String variant) { return new ModelResourceLocation("thaumcraft:" + variant); }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */   
+/*  71 */   public EnumRarity func_77613_e(ItemStack itemstack) { return EnumRarity.EPIC; }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */   
+/*     */   public void func_77663_a(ItemStack stack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
+/*  77 */     super.func_77663_a(stack, world, entity, p_77663_4_, p_77663_5_);
+/*     */     
+/*  79 */     if (stack.func_77951_h() && entity != null && entity.field_70173_aa % 20 == 0 && entity instanceof EntityLivingBase) {
+/*  80 */       stack.func_77972_a(-1, (EntityLivingBase)entity);
+/*     */     }
+/*     */   }
+/*     */ 
+/*     */   
+/*     */   public boolean func_77644_a(ItemStack is, EntityLivingBase target, EntityLivingBase hitter) {
+/*  86 */     if (!target.field_70170_p.field_72995_K && (
+/*  87 */       !(target instanceof EntityPlayer) || !(hitter instanceof EntityPlayer) || FMLCommonHandler.instance().getMinecraftServerInstance().func_71219_W())) {
+/*     */       
+/*     */       try {
+/*     */         
+/*  91 */         target.func_70690_d(new PotionEffect(MobEffects.field_76437_t, 60));
+/*  92 */         target.func_70690_d(new PotionEffect(MobEffects.field_76438_s, 120));
+/*  93 */       } catch (Exception exception) {}
+/*     */     }
+/*     */     
+/*  96 */     return super.func_77644_a(is, target, hitter);
+/*     */   }
+/*     */ 
+/*     */ 
+/*     */   
+/* 101 */   public int getWarp(ItemStack itemstack, EntityPlayer player) { return 2; }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */   
+/*     */   @SideOnly(Side.CLIENT)
+/*     */   public void func_77624_a(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+/* 109 */     tooltip.add(TextFormatting.GOLD + I18n.func_74838_a("enchantment.special.sapgreat"));
+/* 110 */     super.func_77624_a(stack, worldIn, tooltip, flagIn);
+/*     */   }
+/*     */ }
+
+
+/* Location:              D:\工程开发\Cracked\Thaumcraft-1.12.2-6.1.BETA26.jar!\thaumcraft\common\items\tools\ItemCrimsonBlade.class
+ * Java compiler version: 8 (52.0)
+ * JD-Core Version:       1.0.7
+ */
